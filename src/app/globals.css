@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -20,7 +30,320 @@
 }
 
 body {
-  background: var(--background);
+  /* Dark purple noisy gradient background */
+  background:
+    linear-gradient(45deg, rgba(60, 0, 90, 0.9), rgba(30, 0, 50, 0.95)), /* Darker purple gradient */
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch' seed='42'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.5'/%3E%3C/svg%3E"); /* Finer, grainier noise */
+  background-attachment: fixed; /* Keeps the gradient fixed during scroll */
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh; /* Ensure body takes full viewport height */
+  display: flex; /* Helps with centering content if needed */
+  flex-direction: column; /* Default direction for content */
+}
+
+/* Glassmorphism card style - adjusted for darker background */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05); /* Less opaque white for better contrast on dark bg */
+  backdrop-filter: blur(12px); /* Slightly more blur */
+  -webkit-backdrop-filter: blur(12px); /* For Safari */
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Slightly more visible border */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); /* Adjusted shadow for dark bg */
+  padding: 20px;
+  color: #e0e0e0; /* Lighter text color for dark background */
+}
+
+/* Dark mode adjustments for glass card are less critical now with a dark default, but can be fine-tuned */
+@media (prefers-color-scheme: dark) {
+  .glass-card {
+    background: rgba(45, 35, 55, 0.25); /* Darker, slightly purple-tinted transparent for dark mode */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f0f0f0; /* Ensure text is very light */
+  }
+}
+
+/* Basic Responsive Design Adjustments */
+/* Small devices (phones, 600px and down) */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px; /* Adjust base font size */
+  }
+  .glass-card {
+    margin: 10px; /* Add some margin on small screens */
+    padding: 15px;
+  }
+  /* Add more specific responsive styles for components as needed */
+}
+
+/* Medium devices (tablets, 768px and down) */
+@media (max-width: 768px) {
+  /* Adjustments for tablets */
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  /* Adjustments for larger desktops */
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  /* Adjustments for very large screens */
+}
+
+/* Admin Dashboard Material Styles */
+.admin-dashboard-container {
+  background-color: rgba(255, 255, 255, 0.03); /* Slightly lighter than pure dark, but still dark */
+  padding: 24px;
+  border-radius: 8px;
+  color: var(--foreground); /* Ensure text is light on dark background */
+  margin: 20px; /* Add some margin around the dashboard */
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.admin-header h1 {
+  font-size: 2.25rem; /* Larger heading */
+  font-weight: 600;
+  color: #f0f0f0; /* Brighter white for heading */
+}
+
+.admin-section {
+  margin-bottom: 32px;
+  background-color: rgba(40, 40, 60, 0.7); /* Darker, slightly purplish card background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Softer, more modern shadow */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-section h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #e0e0e0; /* Light grey for section titles */
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.admin-card { /* For individual items or metrics blocks */
+  background-color: rgba(50, 50, 70, 0.8); /* Slightly lighter than section for contrast */
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 12px;
+  color: #d0d0d0; /* Default text color within cards */
+}
+
+.admin-card strong {
+  color: #f0f0f0; /* Brighter color for strong text */
+}
+
+.admin-card em {
+  color: #b0b0b0; /* Softer color for emphasis/metadata */
+  font-size: 0.9em;
+}
+
+.admin-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.admin-button:hover {
+  transform: translateY(-1px);
+}
+
+.admin-button:active {
+  transform: translateY(0px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.admin-button-primary {
+  background-color: #6200EE; /* Material Purple */
+  color: white;
+}
+.admin-button-primary:hover {
+  background-color: #7F39FB;
+}
+.admin-button-primary:disabled {
+  background-color: #3700B3; /* Darker purple for disabled */
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-button-danger {
+  background-color: #B00020; /* Material Red */
+  color: white;
+}
+.admin-button-danger:hover {
+  background-color: #CF6679; /* Lighter red for hover */
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  overflow: hidden; /* To make border-radius work on table */
+}
+
+.admin-table th, .admin-table td {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 12px 15px;
+  text-align: left;
+  color: #d0d0d0;
+}
+
+.admin-table th {
+  background-color: rgba(60, 60, 80, 0.9); /* Darker header for table */
+  color: #f0f0f0;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.5px;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background-color: rgba(45, 45, 65, 0.7); /* Slightly different for even rows */
+}
+.admin-table tbody tr:nth-child(odd) {
+  background-color: rgba(50, 50, 70, 0.7); /* Slightly different for odd rows */
+}
+
+.admin-table tbody tr:hover {
+  background-color: rgba(70, 70, 90, 0.8); /* Hover effect for rows */
+}
+
+.admin-list {
+  list-style: none;
+  padding: 0;
+}
+
+.admin-list-item {
+  background-color: rgba(50, 50, 70, 0.8);
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.admin-list-item details summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: #c0c0ff; /* A slightly purplish light color for summary */
+}
+.admin-list-item details ul {
+  margin-top: 10px;
+  padding-left: 20px;
+  border-left: 2px solid #6200EE; /* Accent color border */
+  background-color: rgba(0,0,0,0.1);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 0 4px 4px 0;
+}
+.admin-list-item details ul li {
+  padding: 5px 0;
+  color: #c0c0c0;
+}
+.admin-list-item details ul li strong {
+  color: #d0d0d0;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  background-color: rgba(55, 55, 75, 0.85);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.metric-card strong {
+  display: block;
+  font-size: 1.8em;
+  color: #fff; /* White for the number */
+  margin-bottom: 8px;
+}
+.metric-card span { /* The label for the metric */
+  font-size: 0.95em;
+  color: #b0b0b0;
+  text-transform: uppercase;
+}
+
+.status-active {
+  padding: 4px 10px;
+  border-radius: 16px;
+  background-color: #00C853; /* Material Green A700 */
+  color: black;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.status-inactive {
+  padding: 4px 10px;
+  border-radius: 16px;
+  background-color: #6c757d; /* Grey */
+  color: white;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+
+.status-used {
+  color: #FF5252; /* Material Red A200 */
+  font-weight: bold;
+}
+.status-unused {
+  color: #4CAF50; /* Material Green 500 */
+  font-weight: bold;
+}
+
+.success-message {
+  padding: 12px 18px;
+  background-color: rgba(0, 200, 83, 0.2); /* Material Green A700 with alpha */
+  color: #B9F6CA; /* Light green text */
+  border: 1px solid #00C853;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+.success-message strong {
+  color: #E8F5E9; /* Very light green for strong text */
+}
+
+.error-message {
+  padding: 12px 18px;
+  background-color: rgba(176, 0, 32, 0.2); /* Material Red with alpha */
+  color: #FFCDD2; /* Light red text */
+  border: 1px solid #B00020;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Loading message style */
+.loading-message {
+  padding: 30px;
+  text-align: center;
+  font-size: 1.2em;
+  color: #e0e0e0;
 }
